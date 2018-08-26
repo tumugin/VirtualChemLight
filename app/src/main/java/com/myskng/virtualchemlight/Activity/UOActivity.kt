@@ -59,7 +59,9 @@ class UOActivity : AppCompatActivity() {
                 distX > 300 && velocityX > 3000 -> true
                 else -> false
             }
-            if (detected) onUODispose()
+            if (detected){
+                onUODispose()
+            }
             return super.onFling(e1, e2, velocityX, velocityY)
         }
     }
