@@ -2,33 +2,43 @@ package com.myskng.virtualchemlight.activity
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.*
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.EditTextPreference
+import androidx.preference.PreferenceFragmentCompat
 import com.myskng.virtualchemlight.R
 
-class SettingsActivity : AppCompatPreferenceActivity() {
+class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupActionBar()
-        fragmentManager.beginTransaction().replace(android.R.id.content, SettingFragment()).commit()
-    }
-
-    private fun setupActionBar() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportFragmentManager.beginTransaction().replace(android.R.id.content, SettingFragment()).commit()
     }
 
-    class SettingFragment : PreferenceFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
-        val sharedPreferences: SharedPreferences by lazy {
-            preferenceManager.sharedPreferences
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            android.R.id.home -> {
+                finish()
+                return false
+            }
         }
+        return super.onOptionsItemSelected(item)
+    }
 
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
+    class SettingFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
+        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.pref_screen)
             sharedPreferences.registerOnSharedPreferenceChangeListener(this)
             sharedPreferences.all.forEach { item ->
                 val prefobj = findPreference(item.key)
-                if (prefobj is EditTextPreference) prefobj.summary = item.value.toString()
+                if (prefobj is EditTextPreference){
+                    prefobj.summary = item.value.toString()
+                }
             }
+        }
+
+        val sharedPreferences: SharedPreferences by lazy {
+            preferenceManager.sharedPreferences
         }
 
         override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
