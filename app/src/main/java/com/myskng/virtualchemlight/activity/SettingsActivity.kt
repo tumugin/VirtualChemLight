@@ -26,8 +26,8 @@ class SettingsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    class SettingFragment : PreferenceFragmentCompat()
-            , SharedPreferences.OnSharedPreferenceChangeListener {
+    class SettingFragment : PreferenceFragmentCompat(),
+            SharedPreferences.OnSharedPreferenceChangeListener {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             addPreferencesFromResource(R.xml.pref_screen)
             sharedPreferences.registerOnSharedPreferenceChangeListener(this)
