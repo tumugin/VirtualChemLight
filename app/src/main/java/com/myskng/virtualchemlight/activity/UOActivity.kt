@@ -15,10 +15,9 @@ import android.view.*
 import com.myskng.virtualchemlight.R
 import com.myskng.virtualchemlight.uo.UOSensor
 import com.myskng.virtualchemlight.databinding.ActivityUoBinding
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
-import kotlin.coroutines.experimental.suspendCoroutine
+import kotlinx.coroutines.*
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 import kotlin.math.absoluteValue
 
 class UOActivity : AppCompatActivity() {
@@ -32,7 +31,7 @@ class UOActivity : AppCompatActivity() {
 
     private var uoLock: Boolean = false
     private val uoAnimatorList: MutableList<ViewPropertyAnimator> = mutableListOf()
-    private val rootJob = Job()
+    private val rootJob = SupervisorJob()
 
     private val onGestureListener = object : GestureDetector.SimpleOnGestureListener() {
         override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
@@ -98,7 +97,7 @@ class UOActivity : AppCompatActivity() {
     }
 
     private fun onUOIgnition() {
-        launch(UI, parent = rootJob) {
+        GlobalScope.launch(Dispatchers.Main + rootJob) {
             // check if locked
             if (uoLock) return@launch
             uoLock = true
