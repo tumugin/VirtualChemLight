@@ -9,4 +9,6 @@
     <string name="uo_force">ペンライトを点火する加速度の閾値(m/s^2)</string>
     <string name="message_volume_min">音量がミュートになっています。\n最大限に楽しむ為には音量を上げてください。</string>
     <string name="text_setvolumemax">ぶち上がれ</string>
+    <string name="rights_notation">権利表記</string>
+    <string name="oss_license">オープンソースライセンス</string>
 </resources>

@@ -8,6 +8,8 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.EditTextPreference
 import androidx.preference.PreferenceFragmentCompat
+import com.google.android.gms.oss.licenses.OssLicensesActivity
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.myskng.virtualchemlight.R
 
 class SettingsActivity : AppCompatActivity() {
@@ -46,6 +48,11 @@ class SettingsActivity : AppCompatActivity() {
                 if (prefobj is EditTextPreference) {
                     prefobj.summary = item.value.toString()
                 }
+            }
+            findPreference("oss_license").setOnPreferenceClickListener {
+                val intent = Intent(requireContext(), OssLicensesMenuActivity::class.java)
+                startActivity(intent)
+                true
             }
         }
 
