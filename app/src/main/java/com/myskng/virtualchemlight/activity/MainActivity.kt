@@ -20,9 +20,11 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.handlers = this
         // Prepare ViewPager
-        viewPagerAdapter.presenterList.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_1)))
-        viewPagerAdapter.presenterList.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_2)))
-        viewPagerAdapter.presenterList.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_3)))
+        viewPagerAdapter.presenterList.also {
+            it.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_1)))
+            it.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_2)))
+            it.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_3)))
+        }
         binding.tutorialViewpager.adapter = viewPagerAdapter
     }
 
