@@ -27,7 +27,7 @@ import kotlin.math.absoluteValue
 class UOActivity : AppCompatActivity() {
     companion object {
         fun createUOActivityIntent(context: Context): Intent {
-            return Intent(context, this::class.java)
+            return Intent(context, UOActivity::class.java)
         }
     }
 
