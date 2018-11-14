@@ -9,10 +9,10 @@ class ViewPagerAdapter : PagerAdapter() {
         container.removeView(`object` as View)
     }
 
-    var PresenterList: MutableList<ViewPagerPresenter> = mutableListOf()
+    var presenterList: MutableList<ViewPagerPresenter> = mutableListOf()
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view = PresenterList.get(position).view
+        val view = presenterList[position].view
         // workaround 何故か最後のアイテムだけ最初からどこかに所属している状態になるので外してやる
         (view.parent as ViewGroup?)?.removeView(view)
         container.addView(view)
@@ -24,6 +24,6 @@ class ViewPagerAdapter : PagerAdapter() {
     }
 
     override fun getCount(): Int {
-        return PresenterList.count()
+        return presenterList.count()
     }
 }
