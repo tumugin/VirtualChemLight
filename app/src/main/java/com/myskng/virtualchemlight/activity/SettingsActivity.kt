@@ -13,15 +13,17 @@ import com.myskng.virtualchemlight.R
 class SettingsActivity : AppCompatActivity() {
     companion object {
         fun createSettingsActivityIntent(context: Context): Intent {
-            return Intent(context, this::class.java)
+            return Intent(context, SettingsActivity::class.java)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportFragmentManager.beginTransaction()
-                .replace(android.R.id.content, SettingFragment()).commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                    .replace(android.R.id.content, SettingFragment()).commit()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
