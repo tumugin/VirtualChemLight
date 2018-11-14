@@ -1,6 +1,7 @@
 package com.myskng.virtualchemlight.activity
 
 import android.content.Context
+import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -15,12 +16,21 @@ import android.view.*
 import com.myskng.virtualchemlight.R
 import com.myskng.virtualchemlight.uo.UOSensor
 import com.myskng.virtualchemlight.databinding.ActivityUoBinding
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.absoluteValue
 
 class UOActivity : AppCompatActivity() {
+    companion object {
+        fun createUOActivityIntent(context: Context): Intent {
+            return Intent(context, this::class.java)
+        }
+    }
+
     private lateinit var binding: ActivityUoBinding
 
     private val parentView by lazy { findViewById<View>(android.R.id.content) }

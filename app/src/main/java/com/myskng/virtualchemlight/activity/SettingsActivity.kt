@@ -1,5 +1,7 @@
 package com.myskng.virtualchemlight.activity
 
+import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,6 +11,12 @@ import androidx.preference.PreferenceFragmentCompat
 import com.myskng.virtualchemlight.R
 
 class SettingsActivity : AppCompatActivity() {
+    companion object {
+        fun createSettingsActivityIntent(context: Context): Intent {
+            return Intent(context, this::class.java)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

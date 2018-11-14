@@ -1,6 +1,5 @@
 package com.myskng.virtualchemlight.activity
 
-import android.content.Intent
 import androidx.databinding.DataBindingUtil
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,17 +20,21 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.handlers = this
         // Prepare ViewPager
-        viewPagerAdapter.PresenterList.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_1)))
-        viewPagerAdapter.PresenterList.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_2)))
-        viewPagerAdapter.PresenterList.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_3)))
+        viewPagerAdapter.presenterList.also {
+            it.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_1)))
+            it.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_2)))
+            it.add(ViewPagerPresenter(findViewById(R.id.tutorial_viewpager_layout_3)))
+        }
         binding.tutorialViewpager.adapter = viewPagerAdapter
     }
 
     fun onAcceptClick(view: View) {
-        startActivity(Intent(this, UOActivity::class.java))
+        val intent = UOActivity.createUOActivityIntent(this)
+        startActivity(intent)
     }
 
     fun onFabClick(view: View) {
-        startActivity(Intent(this, SettingsActivity::class.java))
+        val intent = SettingsActivity.createSettingsActivityIntent(this)
+        startActivity(intent)
     }
 }
