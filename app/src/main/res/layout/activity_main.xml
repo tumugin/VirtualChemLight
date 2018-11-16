@@ -47,6 +47,12 @@
                             android:layout_height="fill_parent"
                             android:id="@+id/tutorial_viewpager_layout_1">
 
+                        <ImageView
+                                android:src="@drawable/ic_tutorial_img_3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                         <TextView
                                 android:text="@string/tutorial_text_1"
                                 android:layout_width="wrap_content"
@@ -84,6 +90,12 @@
                             android:layout_height="fill_parent"
                             android:id="@+id/tutorial_viewpager_layout_3">
 
+                        <ImageView
+                                android:src="@drawable/ic_tutorial_img_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
                         <TextView
                                 android:text="@string/tutorial_text_3"
                                 android:layout_width="wrap_content"
@@ -113,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large"
                         android:onClick="@{handlers.onAcceptClick}"
+                        android:textColor="@android:color/white"
                         style="@style/Widget.AppCompat.Button.Colored"
                         android:id="@+id/tutorial_button_ok"/>
             </LinearLayout>
