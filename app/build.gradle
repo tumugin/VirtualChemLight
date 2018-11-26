@@ -40,10 +40,11 @@ android {
     }
 }
 
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 ktlint {
     version = "0.27.0"
     android = true
-    reporter = "checkstyle"
+    reporters = [ReporterType.CHECKSTYLE]
     ignoreFailures = true
 }
 
