@@ -16,15 +16,19 @@ import android.view.*
 import com.myskng.virtualchemlight.R
 import com.myskng.virtualchemlight.uo.UOSensor
 import com.myskng.virtualchemlight.databinding.ActivityUoBinding
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlin.math.absoluteValue
 
-class UOActivity : AppCompatActivity() {
+class UOActivity : AppCompatActivity(), CoroutineScope {
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + rootJob
+
     companion object {
         fun createUOActivityIntent(context: Context): Intent {
             return Intent(context, UOActivity::class.java)
@@ -107,7 +111,7 @@ class UOActivity : AppCompatActivity() {
     }
 
     private fun onUOIgnition() {
-        GlobalScope.launch(Dispatchers.Main + rootJob) {
+        launch {
             // check if locked
             if (uoLock) return@launch
             uoLock = true
