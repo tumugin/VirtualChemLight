@@ -16,10 +16,7 @@ import android.view.*
 import com.myskng.virtualchemlight.R
 import com.myskng.virtualchemlight.uo.UOSensor
 import com.myskng.virtualchemlight.databinding.ActivityUoBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -46,6 +43,9 @@ class UOActivity : AppCompatActivity(), CoroutineScope {
     private var uoLock: Boolean = false
     private val uoAnimatorList: MutableList<ViewPropertyAnimator> = mutableListOf()
     private val rootJob = SupervisorJob()
+
+    private var pikapikaJob = Job(rootJob)
+    private var gaiakuRunning = false
 
     private val onGestureListener = object : GestureDetector.SimpleOnGestureListener() {
         override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
@@ -77,6 +77,7 @@ class UOActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_uo)
         // Binding
         binding = DataBindingUtil.setContentView(this, R.layout.activity_uo)
+        binding.handlers = this
         // Gesture
         gestureDetector = GestureDetector(this, onGestureListener)
         // Prepare resource
@@ -174,6 +175,47 @@ class UOActivity : AppCompatActivity(), CoroutineScope {
             this.duration = 500
             this.withEndAction { uoLock = false }
             uoAnimatorList.add(this)
+        }
+    }
+
+    fun onPikaPikaButtonClick() {
+        if (gaiakuRunning) {
+            pikapikaJob.cancel()
+            uoAnimatorList.forEach { it.cancel() }
+            binding.UOimageViewMAX.alpha = 0f
+            binding.UOimageViewNormal.alpha = 0f
+            uoLock = false
+            gaiakuRunning = false
+            pikapikaJob = Job(rootJob)
+            return
+        }
+
+        launch(pikapikaJob) {
+            uoLock = true
+            gaiakuRunning = true
+            uoAnimatorList.forEach { it.cancel() }
+            uoAnimatorList.clear()
+            binding.UOimageViewMAX.alpha = 1f
+            binding.UOimageViewNormal.alpha = 0f
+            while (true) {
+                // 直接プロパティを変更してもすぐに反映されず上手くピカピカしないのでAnimationを使う(回避策)
+                suspendCoroutine<Unit> {
+                    with(binding.UOimageViewMAX.animate().alpha(1.0f)) {
+                        uoAnimatorList.add(this)
+                        this.duration = 0
+                        this.withEndAction { it.resume(Unit) }
+                    }
+                }
+                delay(20)
+                suspendCoroutine<Unit> {
+                    with(binding.UOimageViewMAX.animate().alpha(0f)) {
+                        uoAnimatorList.add(this)
+                        this.duration = 0
+                        this.withEndAction { it.resume(Unit) }
+                    }
+                }
+                uoAnimatorList.clear()
+            }
         }
     }
 
