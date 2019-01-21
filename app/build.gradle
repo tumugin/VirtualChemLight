@@ -58,11 +58,11 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     //Google
-    implementation 'com.google.android.gms:play-services-oss-licenses:16.0.1'
+    implementation 'com.google.android.gms:play-services-oss-licenses:16.0.2'
     //3rd party Libs
     implementation 'com.romandanylyk:pageindicatorview:1.0.1@aar'
     //Kotlin
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.0.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //Test
